@@ -2,6 +2,7 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,25 @@ using System.Web;
 
 namespace eShopWebForms.Services
 {
+#if !NETFRAMEWORK
+    internal static class AzureExtensions
+    {
+        public static void CreateIfNotExists(this CloudBlobContainer c) => c.CreateIfNotExistsAsync().Wait();
+
+        public static BlobContainerPermissions GetPermissions(this CloudBlobContainer c) => c.GetPermissionsAsync().Result;
+
+        public static void Delete(this CloudBlob c) => c.DeleteAsync().Wait();
+
+        public static void SetPermissions(this CloudBlobContainer c, BlobContainerPermissions permissions) => c.SetPermissionsAsync(permissions).Wait();
+
+        public static IEnumerable<CloudBlob> ListBlobs(this CloudBlobContainer c, string prefix = null) => throw new NotImplementedException();
+
+        public static void StartCopy(this CloudBlockBlob blob, CloudBlockBlob source) => throw new NotImplementedException();
+
+        public static void UploadFromStream(this CloudBlockBlob blob, Stream stream) => throw new NotImplementedException();
+    }
+#endif
+
     public class ImageAzureStorage : IImageService
     {
 

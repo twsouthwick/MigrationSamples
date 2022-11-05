@@ -2,6 +2,7 @@
 using eShopWebForms.Models;
 using eShopWebForms.Models.Infrastructure;
 using eShopWebForms.Services;
+using System;
 
 namespace eShopWebForms.Modules
 {
@@ -10,6 +11,11 @@ namespace eShopWebForms.Modules
         private bool useMockData;
         private bool useAzureStorage;
         private bool useManagedIdentity;
+
+        public ApplicationModule()
+            : this(CatalogConfiguration.UseMockData, CatalogConfiguration.UseAzureActiveDirectory, CatalogConfiguration.UseManagedIdentity)
+        {
+        }
 
         public ApplicationModule(bool useMockData, bool useAzureStorage, bool useManagedIdentity)
         {
@@ -57,9 +63,13 @@ namespace eShopWebForms.Modules
 
             if (this.useManagedIdentity)
             {
+#if NETFRAMEWORK
                 builder.RegisterType<ManagedIdentitySqlConnectionFactory>()
                     .As<ISqlConnectionFactory>()
                     .SingleInstance();
+#else
+                throw new NotSupportedException("Managed identity is not supported");
+#endif
             }
             else
             {
