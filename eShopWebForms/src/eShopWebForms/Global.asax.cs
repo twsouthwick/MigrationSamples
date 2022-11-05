@@ -7,6 +7,7 @@ using eShopWebForms.Services;
 using log4net;
 using Microsoft.ApplicationInsights.Extensibility;
 using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Web;
@@ -37,6 +38,20 @@ namespace eShopWebForms
             InitializeCatalogImages();
             InitializePipeline();
             this.BeginRequest += Application_BeginRequest;
+
+            SystemWebAdapterConfiguration.AddSystemWebAdapters(this)
+                .AddJsonSessionSerializer(options =>
+                {
+                    options.RegisterKey<DateTime>("SessionStartTime");
+                    options.RegisterKey<string>("MachineName");
+                })
+                .AddProxySupport(options => options.UseForwardedHeaders = true)
+                .AddRemoteAppServer(options =>
+                {
+                    options.ApiKey = ConfigurationManager.AppSettings["RemoteApiKey"];
+                })
+                .AddAuthenticationServer()
+                .AddSessionServer();
         }
 
         /// <summary>
