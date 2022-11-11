@@ -6,6 +6,7 @@ using Autofac.Extensions.DependencyInjection;
 using eShopWebForms.Modules;
 using System.Web;
 using System.Web.Optimization;
+using Microsoft.AspNetCore.SystemWebAdapters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddSystemWebAdapters()
         options.RegisterKey<DateTime>("SessionStartTime");
         options.RegisterKey<string>("MachineName");
     })
+    .AddWebForms()
     .AddDynamicPages(options =>
     {
         options.UseFrameworkParser = false;
@@ -43,9 +45,9 @@ builder.Services.AddSystemWebAdapters()
         builder.Configuration.GetSection("RemoteApp").Bind(options);
         options.RemoteAppUrl = new(builder.Configuration["ReverseProxy:Clusters:fallbackCluster:Destinations:fallbackApp:Address"]);
     })
-    //.AddAuthenticationClient(isDefaultScheme: true, options =>
-    //{
-    //})
+    .AddAuthenticationClient(isDefaultScheme: true, options =>
+    {
+    })
     .AddSessionClient(options =>
     {
     });
@@ -64,8 +66,28 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSystemWebAdapters();
+app.Use((ctx, next) =>
+{
+    return next(ctx);
+});
 
-app.MapDynamicAspxPages(app.Environment.ContentRootFileProvider);
-//app.MapReverseProxy();
+app.MapDynamicAspxPages(app.Environment.ContentRootFileProvider)
+    .Add(t =>
+    {
+        if (t.RequestDelegate is { } next)
+        {
+            t.RequestDelegate = ctx =>
+            {
+                if (ctx.Features.Get<IHttpHandlerFeature>() is { Current: Page page })
+                {
+                    ctx.RequestServices.GetAutofacRoot().InjectUnsetProperties(page);
+                }
+
+                return next(ctx);
+            };
+        }
+    });
+
+app.MapReverseProxy();
 
 app.Run();
