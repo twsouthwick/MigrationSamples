@@ -9,7 +9,7 @@ using System.Web.Optimization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddAppConfig(isOptional: false);
+builder.Configuration.AddAppConfig("eShop.config", isOptional: false);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>

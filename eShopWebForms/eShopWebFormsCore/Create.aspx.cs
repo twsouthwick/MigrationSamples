@@ -1,8 +1,6 @@
 ﻿using eShopWebForms.Models;
 using eShopWebForms.Services;
 using log4net;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.OpenIdConnect;
 using System;
 using System.Collections.Generic;
 using System.IO;
