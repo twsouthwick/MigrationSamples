@@ -2,6 +2,7 @@
 using eShopWebForms.Models;
 using eShopWebForms.Models.Infrastructure;
 using eShopWebForms.Services;
+using System;
 
 namespace eShopWebForms.Modules
 {
@@ -57,9 +58,13 @@ namespace eShopWebForms.Modules
 
             if (this.useManagedIdentity)
             {
+#if NETFRAMEWORK
                 builder.RegisterType<ManagedIdentitySqlConnectionFactory>()
                     .As<ISqlConnectionFactory>()
                     .SingleInstance();
+#else
+                throw new PlatformNotSupportedException();
+#endif
             }
             else
             {

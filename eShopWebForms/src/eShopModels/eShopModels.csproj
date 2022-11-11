@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;net7.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,13 +9,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <PackageReference Include="EntityFramework" Version="6.2.0" Condition=" '$(TargetFramework)' == 'net472' " />
+    <PackageReference Include="EntityFramework" Version="6.4.0" Condition=" '$(TargetFramework)' == 'net7.0' " />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Configuration" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.0.0-rc.2.22551.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
