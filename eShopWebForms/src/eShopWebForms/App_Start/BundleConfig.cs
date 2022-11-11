@@ -37,6 +37,7 @@ namespace eShopWebForms
                       "~/Content/base.css",
                       "~/Content/site.css"));
 
+#if !NET7_0
             ScriptManager.ScriptResourceMapping.AddDefinition(
                 "respond",
                 new ScriptResourceDefinition
@@ -44,6 +45,7 @@ namespace eShopWebForms
                     Path = "~/Scripts/respond.min.js",
                     DebugPath = "~/Scripts/respond.js",
                 });
+#endif
         }
     }
 }

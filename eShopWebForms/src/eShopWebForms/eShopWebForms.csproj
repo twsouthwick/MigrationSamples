@@ -29,6 +29,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <_MigrateToProjectGuid>03f22c54-ceea-451f-8b8f-8e903ff1a3de</_MigrateToProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

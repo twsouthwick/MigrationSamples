@@ -7,6 +7,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Include="..\eShopWebForms\App_Start\BundleConfig.cs" Link="App_Start\BundleConfig.cs" />
     <Compile Include="..\eShopWebForms\Modules\ApplicationModule.cs" Link="ApplicationModule.cs" />
   </ItemGroup>
 
@@ -19,10 +20,16 @@
     <PackageReference Include="WebForms.Compilation" Version="0.1.0-ci0304" />
     <PackageReference Include="WebForms.Extensions" Version="0.1.0-ci0304" />
     <PackageReference Include="WebForms.Optimization" Version="0.1.0-ci0304" />
+    <PackageReference Include="Yarp.ReverseProxy" Version="1.1.0" />
+    <PackageReference Include="log4net" Version="2.0.15" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\eShopModels\eShopModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="App_Start\" />
   </ItemGroup>
 
 </Project>
