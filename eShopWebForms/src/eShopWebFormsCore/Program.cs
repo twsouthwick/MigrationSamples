@@ -5,6 +5,7 @@ using eShopWebFormsCore;
 using System.Web.Optimization;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,10 @@ builder.Services.AddConfigurationManager();
 var app = builder.Build();
 
 app.UseWebFormsScripts();
+
+app.UseRouting();
+
+app.UseSystemWebAdapters();
 
 app.MapHttpHandlers()
     .AddHandlerPropertyInjection();

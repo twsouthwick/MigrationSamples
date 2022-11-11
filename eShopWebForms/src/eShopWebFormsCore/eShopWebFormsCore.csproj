@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a8d9bd7e-ed5d-4674-a0e1-01ad59c180e6</UserSecretsId>
   </PropertyGroup>
   
   <ItemGroup>
@@ -14,12 +15,12 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Swick.ConfigurationManagerAdapter" Version="0.1.0-ci0304" />
+    <PackageReference Include="Swick.ConfigurationManagerAdapter" Version="0.1.0-ci0307" />
     <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters.CoreServices" Version="1.0.0-rc.2.22551.1" />
-    <PackageReference Include="WebForms" Version="0.1.0-ci0304" />
-    <PackageReference Include="WebForms.Compilation" Version="0.1.0-ci0304" />
-    <PackageReference Include="WebForms.Extensions" Version="0.1.0-ci0304" />
-    <PackageReference Include="WebForms.Optimization" Version="0.1.0-ci0304" />
+    <PackageReference Include="WebForms" Version="0.1.0-ci0307" />
+    <PackageReference Include="WebForms.Compilation" Version="0.1.0-ci0307" />
+    <PackageReference Include="WebForms.Extensions" Version="0.1.0-ci0307" />
+    <PackageReference Include="WebForms.Optimization" Version="0.1.0-ci0307" />
     <PackageReference Include="Yarp.ReverseProxy" Version="1.1.0" />
     <PackageReference Include="log4net" Version="2.0.15" />
   </ItemGroup>
