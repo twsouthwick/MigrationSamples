@@ -19,7 +19,10 @@ builder.Services.AddSystemWebAdapters()
          options.RegisterKey<DateTime>("SessionStartTime");
          options.RegisterKey<string>("MachineName");
      })
-    .AddHttpHandlers()
+    .AddHttpHandlers(options =>
+    {
+        eShopWebForms.RouteConfig.RegisterRoutes(options.Routes);
+    })
     .AddDynamicPages(options =>
     {
         options.Files = builder.Environment.ContentRootFileProvider;

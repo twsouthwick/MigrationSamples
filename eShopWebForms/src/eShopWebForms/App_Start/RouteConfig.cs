@@ -1,13 +1,16 @@
 using System;
 using System.Web;
 using System.Web.Routing;
+
+#if !NET7_0
 using System.Web.Services.Protocols;
+#endif
 
 namespace eShopWebForms
 {
     public static class RouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static void RegisterRoutes(System.Web.Routing.RouteCollection routes)
         {
             routes.MapPageRoute(
                 "",
@@ -41,6 +44,8 @@ namespace eShopWebForms
                 );
         }
     }
+
+#if !NET7_0
     public class ServiceRouteHandler : IRouteHandler
     {
         private readonly string _virtualPath;
@@ -62,4 +67,5 @@ namespace eShopWebForms
             return _handlerFactory.GetHandler(HttpContext.Current, requestContext.HttpContext.Request.HttpMethod, _virtualPath, requestContext.HttpContext.Server.MapPath(_virtualPath));
         }
     }
+#endif
 }

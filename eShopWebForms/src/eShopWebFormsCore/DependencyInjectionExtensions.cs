@@ -9,19 +9,25 @@ internal static class DependencyInjectionExtensions
     public static T AddHandlerPropertyInjection<T>(this T builder)
         where T : IEndpointConventionBuilder
     {
-        return builder.AddEndpointFilter(new AutofacPropertyHandlerInjectionFilter());
-    }
-
-    private class AutofacPropertyHandlerInjectionFilter : IEndpointFilter
-    {
-        public ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
+        builder.Add(builder =>
         {
-            if (context.HttpContext.Features.Get<IHttpHandlerFeature>() is { Current: { } handler })
-            {
-                context.HttpContext.RequestServices.GetAutofacRoot().InjectUnsetProperties(handler);
-            }
+            var next = builder.RequestDelegate;
 
-            return next(context);
-        }
+            if (next is not null)
+            {
+                builder.RequestDelegate = async (HttpContext context) =>
+                {
+                    var log = context.RequestServices.GetRequiredService<ILogger<System.Web.UI.Page>>();
+
+                    if (context.Features.Get<IHttpHandlerFeature>() is { Current: { } handler })
+                    {
+                        context.RequestServices.GetAutofacRoot().InjectUnsetProperties(handler);
+                    }
+
+                    await next(context);
+                };
+            }
+        });
+        return builder;
     }
 }
