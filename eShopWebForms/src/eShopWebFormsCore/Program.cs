@@ -1,11 +1,10 @@
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using eShopWebForms.Modules;
 using eShopWebFormsCore;
 using System.Web.Optimization;
-using System.Web.UI.WebControls;
 using System.Web.UI;
-using Microsoft.Extensions.Options;
+using System.Web.UI.WebControls;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +23,16 @@ builder.Services.AddSystemWebAdapters()
     .AddDynamicPages(options =>
     {
         options.Files = builder.Environment.ContentRootFileProvider;
-        options.UseFrameworkParser = true;
+
         options.AddAssemblyFrom<log4net.ILog>();
 
         options.AddTypeNamespace<ListView>("asp");
         options.AddTypeNamespace<ScriptManager>("asp");
         options.AddTypeNamespace<BundleReference>("webopt");
+    })
+    .AddOptimization(options =>
+    {
+        eShopWebForms.BundleConfig.RegisterBundles(options.Bundles);
     })
     .AddRemoteAppClient(options =>
     {
